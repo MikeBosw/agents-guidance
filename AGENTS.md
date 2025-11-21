@@ -24,7 +24,7 @@
 - Strongly prefer throwing errors over defensively programming against unexpected values, unexpected state, or
   unexpected inputs. For example, if a parsed JSON value should be an int, or at least convertible to an int, simply
   attempt the cast. Don't check to see if it's a valid int; Python will do that for us and throw an error as
-  appropriate. Likewise, if a field is expected to be present, use `foo["bar"]` instead of `foo.get("bar")`.
+  appropriate. Likewise, if a field is always expected to be present, use `foo["bar"]` instead of `foo.get("bar")`.
 - Do not wrap and rethrow errors unless there is genuinely useful, local context to be added. Instead, just throw the
   original error. If it's a specific, known error, consider making mention of it in the function's docstring.
 - Avoid using None to represent an error condition. For example, bad input params, missing files, missing fields in
