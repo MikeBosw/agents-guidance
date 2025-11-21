@@ -14,16 +14,20 @@
 
 ### Code Style
 
-- Strongly prefer throwing errors rather than defensively programming against unexpected values, unexpected state, or unexpected inputs. For example, if a parsed JSON value should be an int, or at least convertible to an int, simply attempt the cast. Don't check to see if it's a valid int; Python will do that for us and throw an error as appropriate. Likewise, if a field is expected to be present, use `foo["bar"]` instead of `foo.get("bar")`.
-- Strongly prefer to throw, rather than suppress, unexpected errors. Let it bubble up so that callers have the opportunity (though not the responsibility) to handle them. If the program crashes because nobody handled the error, that's often correct behavior.
-- Readable code needs no comments. Comments should exist only to explain opaque logic or missing context. If there's a
-  `json.loads` call, for example, you should absolutely not
-  comment that you're loading a JSON string. Likewise, there should absolutely not be a comment `# send result to user`
-  for an invocation of `send_to_user`.
-- Avoid using None to represent an error condition. For example, bad input params, missing files, missing fields in
-  files, disk OOM, and other such problems should almost always
-  result in a thrown error, not a returned None. Generally, only return None when None is a valid value.
+#### Errors
+
+- Strongly prefer throwing errors rather than defensively programming against unexpected values, unexpected state, or unexpected inputs. For example, if a parsed JSON value should be an int, or at least convertible to an int, simply attempt the cast. Don't check to see if it's a valid int; Python will do that for us and throw an error as appropriate. Likewise, if a field is expected to be present, use `foo["bar"]` instead of `foo.get("bar")`. Fail fast so that somebody higher up the call stack has the opportunity to handle the problem. If the problem isn't handled by anyone up the call stack, the program should simply crash.
+- Strongly prefer to throw, rather than suppress, unexpected or irrecoverable errors. Let it bubble up so that callers have the opportunity (though not the responsibility) to handle them. If the program crashes because nobody handled the error, that's often correct behavior. It's much easier to debug a crash due to unexpected or irrecoverable conditions than to debug a program pretending everything's ok when in fact things have gone awry.
+- Do not wrap and rethrow errors unless there is critical context to be added. Instead, just throw the original error.
+  If it's a specific, known error, consider making mention of it in the function's docstring.
+- Highly readable lines of code must not be commented. Comments should exist only to explain opaque logic, missing business/operational context, or code with middling to low readability. If there's a `json.loads` call, for example, you should absolutely not comment that you're loading a JSON string. Likewise, there should absolutely not be a comment `# send result to user` for an invocation of `send_to_user`.
+- Avoid using None to represent an error condition. For example, bad input params, missing files, missing fields in files, disk OOM, and other such problems should almost always result in a thrown error, not a returned None. Generally, only return None when None is a valid value.
 - Avoid returning True/False for success/failure. Throw errors.
+
+#### Everything Else
+
+- Strongly favor immutability. Avoid mutation.
+- Avoid using Any when at all possible.
 - Log messages should be no more than one sentence long. The first letter should not be capitalized unless it's an
   acronym or proper noun. The message should not end with a period.
 - Avoid empty lines of whitespace unless required by PEP / Ruff / Black style requirements.
@@ -50,12 +54,8 @@
     print("\nFirst conversation details:")
     # ... a whole bunch of logic
   ```
-- Do not wrap and rethrow errors unless there is critical context to be added. Instead, just throw the original error.
-  If it's a specific, known error, consider making mention of it in the function's docstring.
-- Avoid mutation.
 - The first line of a Git commit message should begin with a lowercase letter (unless it's an acronym or proper noun),
   be concise, and end without a period
-- Avoid using Any when at all possible.
 - Function docs use the present tense in the indicative voice and skip the subject, e.g., "Creates a new user."
 - Class docs typically begin with "A" or "The" followed by a noun phrase describing what the entity is, followed by (if
   more than just a simple data object) what the entity does. 
