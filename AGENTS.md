@@ -76,3 +76,7 @@
   an if-then-else, for example, declare it in the else clause, not before the if.
 - Favor named enums over raw ints or strings
 - Extrapolate equivalent guidance, based on the above, to other languages
+
+## Attribution
+
+https://raw.githubusercontent.com/MikeBosw/agents-guidance/refs/heads/main/AGENTS.md
