@@ -4,6 +4,7 @@
 
 - ALWAYS review this file before making any changes to the codebase, no matter how small the change
 - The venv used by this project, if any, should be activated when making changes
+- After making changes, run `pre-commit run` to make sure types are checked, formatting is corrected, etc
 
 ## Coding Guidelines
 
@@ -42,8 +43,6 @@
 - Log messages should be no more than one sentence long. The first letter should not be capitalized unless it's an
   acronym or proper noun. The message should not end with a period.
 - Avoid empty lines of whitespace unless required by PEP / Ruff / Black style requirements.
-- Use Ruff formatter (Black-compatible) with 120 character line length
-- Use mypy to enforce types
 - Pass the pre-commit hooks or modify and re-commit
 - Minimize the scope of try blocks. Prefer to do only the exception-prone logic within the try block, rather than all
   the before and after logic.
