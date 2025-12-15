@@ -12,6 +12,12 @@
 
 - When first implementing something, be minimalist. "As simple as possible, but no simpler." Do not add bells or
   whistles like --dry-run or --verbose or --verify-output unless specifically asked.
+- Minimize state management and statefulness. If a solution exists that avoids maintaining state between function
+  calls, prefer that solution. Especially for async or parallel code.
+- Strongly favor immutability by default. Avoid mutation. Avoid changing the value of a variable after its initial 
+  assignment, instead creating new intermediary variables as needed. Barring readability issues, favor list 
+  comprehensions, map/reduce, and functional programming. Example: dataclasses should always have frozen=True when 
+  possible. 
 
 ### Code Style
 
@@ -38,9 +44,6 @@
   business/operational context, or code with middling to low readability. If there's a `json.loads` call, for example,
   you should absolutely not comment that you're loading a JSON string. Likewise, there should absolutely not be a
   comment `# send result to user` for an invocation of `send_to_user`.
-- Strongly favor immutability. Avoid mutation. Avoid changing the value of a variable after its initial assignment, 
-  instead creating new intermediary variables as needed. Barring readability issues, favor list comprehensions, 
-  map/reduce, and functional programming.
 - Avoid using Any when at all possible.
 - Log messages should be no more than one sentence long. The first letter should not be capitalized unless it's an
   acronym or proper noun. The message should not end with a period.
