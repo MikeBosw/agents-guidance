@@ -14,10 +14,10 @@
   whistles like --dry-run or --verbose or --verify-output unless specifically asked.
 - Minimize state management and statefulness. If a solution exists that avoids maintaining state between function
   calls, prefer that solution. Especially for async or parallel code.
-- Strongly favor immutability by default. Avoid mutation. Avoid changing the value of a variable after its initial 
-  assignment, instead creating new intermediary variables as needed. Barring readability issues, favor list 
-  comprehensions, map/reduce, and functional programming. Example: dataclasses should always have frozen=True when 
-  possible. 
+- Strongly favor immutability by default:
+  - Never re-assign a value to a variable after its initial assignment. Find other solutions.
+  - Favor list comprehensions, map/reduce, and functional programming.
+  - Plain dataclasses should always have frozen=True when possible, and set the equivalent Config for Pydantic models.
 
 ### Code Style
 
