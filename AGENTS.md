@@ -46,6 +46,8 @@
   comment `# send result to user` for an invocation of `send_to_user`.
 - On the flip side, ALL pyright / mypy / tsc type errors must be commented. You should either explain why the type 
   system is sufficiently deficient to justify an override, or else fix the type error.
+- Never do lazy imports as a "fix" for circular imports. Fix them for real. Propose a refactor that makes sense without
+  creating a ton of spaghetti code.
 - Avoid using Any when at all possible.
 - Log messages should be no more than one sentence long. The first letter should not be capitalized unless it's an
   acronym or proper noun. The message should not end with a period.
