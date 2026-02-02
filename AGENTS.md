@@ -83,6 +83,14 @@
 - Favor named enums over raw ints or strings
 - Extrapolate equivalent guidance, based on the above, to other languages
 
+## PRs
+
+- When implementing PRs, do so on a feature/ branch and submit the PR on that branch
+- When reacting to PR feedback, post an inline reply to every comment. The reply should appear not at the PR level but 
+  at the level of the comment thread.
+- When posting replies to comments, preface replies with `[agent-name]`; for example, if you're Claude Code, preface the
+  replies each with `[claude]`.
+
 ## Attribution
 
 https://raw.githubusercontent.com/MikeBosw/agents-guidance/refs/heads/main/AGENTS.md
