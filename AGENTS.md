@@ -11,9 +11,13 @@
 ### Design Considerations
 
 - When first implementing something, be minimalist. "As simple as possible, but no simpler." Do not add bells or
-  whistles like --dry-run or --verbose or --verify-output unless specifically asked.
-- Minimize state management and statefulness. If a solution exists that avoids maintaining state between function
-  calls, prefer that solution. Especially for async or parallel code.
+  whistles like --dry-run or --verbose or --verify-output unless specifically asked. Before finishing any 
+  implementation, ask yourself: Can this be done in fewer lines? Are these abstractions earning their complexity? Are 
+  they at the right level and in the right place? Would a senior dev look at this and say "why didn't you just..."? 
+  Are there already built helper methods that you could use instead of implementing helper logic from scratch? If you 
+  build 1000 lines and 100 would suffice, that is a failure mode. Prefer boring, obvious solutions that do the trick.
+- Try hard to avoid state management and statefulness. If a solution exists that avoids maintaining state between 
+  function calls, prefer that solution. For async or parallel code, statefulness is all the more expensive.
 - Strongly favor immutability by default:
   - Never re-assign a value to a variable after its initial assignment. Find other solutions.
   - Favor list comprehensions, map/reduce, and functional programming.
