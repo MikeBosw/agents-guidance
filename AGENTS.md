@@ -42,6 +42,20 @@
   Generally, only return None when None is a valid value.
 - Avoid returning True/False for success/failure. Throw errors.
 
+#### Typing
+
+- Don't cheat the type system. Fix the underlying problem.
+- Putting quotes around the type is cheating the type system. Don't do it unless you're sure there's no alternative.
+- You have permission to go to great lengths to avoid using the Any type. Evaluate the structure of JSON blobs and type
+  them using things like TypedDict.
+- Whenever possible, use native types (list, dict) for type hints rather than importing from typing (List, Dict, etc).
+- Never do lazy imports as a "fix" for circular imports. Fix them for real. Propose a refactor that makes sense without
+  creating a ton of spaghetti code. It's hard, but circular imports are completely unacceptable and we use types for a
+  reason. 
+- Never do lazy imports if real types will work.
+- If there is absolutely no way to make the type system work as desired, ALWAYS justify the hacky workaround with a 
+  comment explaining why it was necessary.
+
 #### Everything Else
 
 - Highly readable lines of code must not be commented. Comments should exist only to explain opaque logic, missing
@@ -50,16 +64,12 @@
   comment `# send result to user` for an invocation of `send_to_user`.
 - On the flip side, ALL pyright / mypy / tsc type errors must be commented. You should either explain why the type 
   system is sufficiently deficient to justify an override, or else fix the type error.
-- Never do lazy imports as a "fix" for circular imports. Fix them for real. Propose a refactor that makes sense without
-  creating a ton of spaghetti code.
-- Avoid using Any when at all possible.
 - Log messages should be no more than one sentence long. The first letter should not be capitalized unless it's an
   acronym or proper noun. The message should not end with a period.
 - Avoid empty lines of whitespace unless required by PEP / Ruff / Black style requirements.
 - Pass the pre-commit hooks or modify and re-commit
 - Minimize the scope of try blocks. Prefer to do only the exception-prone logic within the try block, rather than all
   the before and after logic.
-- When possible, use native types (list, dict) for type hints rather than importing from typing (List, Dict, etc).
 - Minimize both indentation and loss of context by putting abortive conditions into standalone if-then-return statements
   at the top of the function or loop. For example, this is an anti-pattern:
   ```python
