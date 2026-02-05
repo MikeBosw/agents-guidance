@@ -59,9 +59,10 @@
 #### Everything Else
 
 - Highly readable lines of code must not be commented. Comments should exist only to explain opaque logic, missing
-  business/operational context, or code with middling to low readability. If there's a `json.loads` call, for example,
-  you should absolutely not comment that you're loading a JSON string. Likewise, there should absolutely not be a
-  comment `# send result to user` for an invocation of `send_to_user`.
+  business/operational context, the justification for hacky workarounds, quirks in third-party behavior that have to be
+  accommodated, or code with middling to low readability. If there's a `json.loads` call, for example, you should 
+  absolutely not comment that you're loading a JSON string. Likewise, there should absolutely not be a comment 
+  `# send result to user` for an invocation of `send_to_user`.
 - On the flip side, ALL pyright / mypy / tsc type errors must be commented. You should either explain why the type 
   system is sufficiently deficient to justify an override, or else fix the type error.
 - Log messages should be no more than one sentence long. The first letter should not be capitalized unless it's an
