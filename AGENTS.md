@@ -97,6 +97,7 @@
   an if-then-else, for example, declare it in the else clause, not before the if.
 - Favor named enums over raw ints or strings
 - Extrapolate equivalent guidance, based on the above, to other languages
+- Whenever it's possible to use f-strings for log messages, never use the %d %s %f stuff.
 
 ## PRs
 
