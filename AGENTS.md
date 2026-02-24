@@ -5,6 +5,7 @@
 - ALWAYS review this file before making any changes to the codebase, no matter how small the change
 - The venv used by this project, if any, should be activated when making changes
 - After making changes, run `git add` on the changed files, then `pre-commit run` to make sure types are checked, etc.
+- Check for a PROJECT.md file adjacent to this file in case there are project-specific guidelines to follow.
 
 ## Coding Guidelines
 
