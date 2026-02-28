@@ -53,6 +53,8 @@
 - Never do lazy imports as a "fix" for circular imports. Fix them for real. Propose a refactor that makes sense without
   creating a ton of spaghetti code. It's hard, but circular imports are completely unacceptable and we use types for a
   reason. 
+- Do not include imports inside of a function body.
+- Do not make complex things happen at import time. Delay until time of usage.
 - Never do lazy imports if real types will work.
 - If there is absolutely no way to make the type system work as desired, ALWAYS justify the hacky workaround with a 
   comment explaining why it was necessary.
