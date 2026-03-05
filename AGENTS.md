@@ -9,20 +9,31 @@
 
 ## Coding Guidelines
 
+### Python-Specific Guidelines
+
+- We use Python for its maturity, the ecosystem, its familiarity to LLMs, its readability, and its other virtues. But we
+  hate its lack of typing. We hate hate hate it. We will do everything in our power to avoid using the Any type, and to
+  make the type system work for us rather than letting things crash at runtime due to an int that was actually a str. We
+  will create first-class types for the data we deal with regularly. We'll do better than just a big ol' bag of dicts.
+  Perhaps we'll go so far as to wrap the `int` or `str` classes because we're sick of confusing Signal ids with Telegram
+  ids. If you see the opportunity to use named types to make the code safer and more self-documenting, take it. "Minor"
+  typing improvements that increase the PR size by up to ~30 lines are NOT out of scope. Major typing improvements that
+  increase the PR size by like, I dunno, 30%? In scope! Bless you and bless your heart.
+
 ### Design Considerations
 
 - When first implementing something, be minimalist. "As simple as possible, but no simpler." Do not add bells or
-  whistles like --dry-run or --verbose or --verify-output unless specifically asked. Before finishing any 
-  implementation, ask yourself: Can this be done in fewer lines? Are these abstractions earning their complexity? Are 
-  they at the right level and in the right place? Would a senior dev look at this and say "why didn't you just..."? 
-  Are there already built helper methods that you could use instead of implementing helper logic from scratch? If you 
+  whistles like --dry-run or --verbose or --verify-output unless specifically asked. Before finishing any
+  implementation, ask yourself: Can this be done in fewer lines? Are these abstractions earning their complexity? Are
+  they at the right level and in the right place? Would a senior dev look at this and say "why didn't you just..."?
+  Are there already built helper methods that you could use instead of implementing helper logic from scratch? If you
   build 1000 lines and 100 would suffice, that is a failure mode. Prefer boring, obvious solutions that do the trick.
-- Try hard to avoid state management and statefulness. If a solution exists that avoids maintaining state between 
+- Try hard to avoid state management and statefulness. If a solution exists that avoids maintaining state between
   function calls, prefer that solution. For async or parallel code, statefulness is all the more expensive.
 - Strongly favor immutability by default:
-  - Never re-assign a value to a variable after its initial assignment. Find other solutions.
-  - Favor list comprehensions, map/reduce, and functional programming.
-  - Plain dataclasses should always have frozen=True when possible, and set the equivalent Config for Pydantic models.
+    - Never re-assign a value to a variable after its initial assignment. Find other solutions.
+    - Favor list comprehensions, map/reduce, and functional programming.
+    - Plain dataclasses should always have frozen=True when possible, and set the equivalent Config for Pydantic models.
 
 ### Code Style
 
@@ -52,23 +63,23 @@
 - Whenever possible, use native types (list, dict) for type hints rather than importing from typing (List, Dict, etc).
 - Never do lazy imports as a "fix" for circular imports. Fix them for real. Propose a refactor that makes sense without
   creating a ton of spaghetti code. It's hard, but circular imports are completely unacceptable and we use types for a
-  reason. 
+  reason.
 - Do not include imports inside of a function body.
 - Do not make complex things happen at import time. Delay until time of usage.
 - Never do lazy imports if real types will work.
-- If there is absolutely no way to make the type system work as desired, ALWAYS justify the hacky workaround with a 
+- If there is absolutely no way to make the type system work as desired, ALWAYS justify the hacky workaround with a
   comment explaining why it was necessary.
-- When using functions that wrap callables, create named functions that take no arguments. The point of this rule is to 
+- When using functions that wrap callables, create named functions that take no arguments. The point of this rule is to
   preserve type safety for the args passed in.
 
 #### Everything Else
 
 - Highly readable lines of code must not be commented. Comments should exist only to explain opaque logic, missing
   business/operational context, the justification for hacky workarounds, quirks in third-party behavior that have to be
-  accommodated, or code with middling to low readability. If there's a `json.loads` call, for example, you should 
-  absolutely not comment that you're loading a JSON string. Likewise, there should absolutely not be a comment 
+  accommodated, or code with middling to low readability. If there's a `json.loads` call, for example, you should
+  absolutely not comment that you're loading a JSON string. Likewise, there should absolutely not be a comment
   `# send result to user` for an invocation of `send_to_user`.
-- On the flip side, ALL pyright / mypy / tsc type errors must be commented. You should either explain why the type 
+- On the flip side, ALL pyright / mypy / tsc type errors must be commented. You should either explain why the type
   system is sufficiently deficient to justify an override, or else fix the type error.
 - Log messages should be no more than one sentence long. The first letter should not be capitalized unless it's an
   acronym or proper noun. The message should not end with a period.
@@ -107,14 +118,14 @@
 ## PRs
 
 - When implementing PRs, do so on a feature/ branch and submit the PR on that branch
-- When reacting to PR feedback, post an inline reply to every comment. The reply should appear not at the PR level but 
+- When reacting to PR feedback, post an inline reply to every comment. The reply should appear not at the PR level but
   at the level of the comment thread.
 - When posting replies to comments, preface replies with `[agent-name]`; for example, if you're Claude Code, preface the
   replies each with `[claude]`.
 - When something is valid but out of scope, add a `TODO(claude): what to do or consider doing, and why` comment.
 - Incidental refactoring is acceptable if it's not large-scale. An example would be moving a private constant previously
   used by a single file into a shared place if it becomes useful to multiple files.
-- Before implementing a PR, consider which parts of the logic would likely exist elsewhere, then look for those bits, 
+- Before implementing a PR, consider which parts of the logic would likely exist elsewhere, then look for those bits,
   then make sure to reuse them rather than re-implementing the same logic. If you find a chunk of logic that would be
   useful in multiple places, consider whether it makes sense to refactor it, or just accept a smidge of duplication.
 
