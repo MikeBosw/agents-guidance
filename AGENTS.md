@@ -69,9 +69,10 @@
 - Never do lazy imports if real types will work.
 - If there is absolutely no way to make the type system work as desired, ALWAYS justify the hacky workaround with a
   comment explaining why it was necessary.
-- When using functions that wrap callables, create named functions that take no arguments. Type checkers like pyrefly do
-  NOT check the argument types passed through executor.map, for example. The point of this rule is to preserve type 
-  safety for the args passed in.
+- When passing callables to APIs that erase argument types (e.g. executor.map, executor.submit, Thread(target=...)), 
+  create named zero-argument functions that capture the args in their body. This ensures the type checker validates the
+  arguments at the call site inside the function, rather than losing them to Callable[..., T]. For APIs that preserve 
+  argument types (e.g. sorted(key=...), map()), inline lambdas or references are fine.
 
 #### Everything Else
 
