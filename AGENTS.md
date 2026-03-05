@@ -69,8 +69,9 @@
 - Never do lazy imports if real types will work.
 - If there is absolutely no way to make the type system work as desired, ALWAYS justify the hacky workaround with a
   comment explaining why it was necessary.
-- When using functions that wrap callables, create named functions that take no arguments. The point of this rule is to
-  preserve type safety for the args passed in.
+- When using functions that wrap callables, create named functions that take no arguments. Type checkers like pyrefly do
+  NOT check the argument types passed through executor.map, for example. The point of this rule is to preserve type 
+  safety for the args passed in.
 
 #### Everything Else
 
