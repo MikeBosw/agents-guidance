@@ -28,6 +28,18 @@
   they at the right level and in the right place? Would a senior dev look at this and say "why didn't you just..."?
   Are there already built helper methods that you could use instead of implementing helper logic from scratch? If you
   build 1000 lines and 100 would suffice, that is a failure mode. Prefer boring, obvious solutions that do the trick.
+- Treat every function signature as a design to critique, not a constraint to accept. Before writing or finalising
+  any non-trivial signature, ask: can any parameter be eliminated? A parameter that shouldn't exist usually shows one
+  of three symptoms:
+    - **Echo parameter**: its value is always derivable from the call site (e.g. a string that always equals the
+      calling method's name). Eliminate it and derive the value inside the function instead (e.g. via
+      `inspect.currentframe()`).
+    - **Hidden dependency**: it's optional but constructs its own fallback internally (`foo: Foo | None = None` with
+      `foo = foo or Foo()` in the body). Make it required and push construction to the caller — `main()` is the right
+      place for that.
+    - **Parallel redundancy**: two parameters have identical signatures but differ only in which instance of a shared
+      base type they operate on (e.g. `call_official: Callable[[], T]` and `call_unofficial: Callable[[], T]`).
+      Collapse them into one callable parameterised on the instance (`call_with: Callable[[Base], T]`).
 - Try hard to avoid state management and statefulness. If a solution exists that avoids maintaining state between
   function calls, prefer that solution. For async or parallel code, statefulness is all the more expensive.
 - Strongly favor immutability by default:
