@@ -82,3 +82,18 @@ For each comment that has not already been addressed (i.e., has no `[claude]` re
    ```
 
 After handling all comments: run `pre-commit run`, fix any issues, commit the fixes (with the same commit conventions from Step 2), and push.
+
+## Step 6: thinking about oversights implied by the issues found (if any)
+
+For all bug fixes implemented in reaction to this feedback, please consider what KINDS of oversights led those bugs to be introduced. Enumerate them specifically.
+
+## Step 7: hunting for potential lurking issues due to the oversights identified
+
+This part is tricky. What other bugs, minor landmines, inconsistencies, broken assumptions, readability issues, unnecessary complexity, typing laziness, or other issues might sneakily have been introduced by the kinds of oversights identified?
+
+Look for them in the code. Confirm or refute your own suspicions and report to the user on any new bugs uncovered by this analysis.
+
+If operating in non-interactive mode, please:
+1. Post a comment to the PR with your findings, including what your analysis process was and what you looked for
+2. Attempt to fix issues you've surfaced, including pre-existing bugs, and push those fixes to the PR
+3. Follow up with a comment on the PR saying which of the issues, if any, you addressed
