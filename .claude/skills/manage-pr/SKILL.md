@@ -15,11 +15,13 @@ Run `git branch --show-current` to check the current branch.
 - If on `master` or `main`: create a `feature/<topic>` branch, deriving the topic name from the staged/unstaged changes. Switch to it.
 - If already on a `feature/*` branch: continue on it (skip to step 2)
 
-## Step 2: Commit changes
+## Step 2: Commit changes incrementally
 
-If changes are already committed, skip to step 3.
+If all changes are already committed, skip to step 3.
 
-Follow the commit protocol defined in CLAUDE.md:
+Try to break down changes into a series of small, non-breaking commits. (Non-breaking does trump small; best effort.)
+
+For each commit, follow the commit protocol defined in CLAUDE.md:
 
 1. `git add` the changed files (prefer adding specific files by name, not `git add -A`).
 2. Run `pre-commit run` and fix any issues it reports. Re-stage and retry until hooks pass.
