@@ -136,12 +136,15 @@
   at the level of the comment thread.
 - When posting replies to comments, preface replies with `[agent-name]`; for example, if you're Claude Code, preface the
   replies each with `[claude]`.
-- When something is valid but out of scope, add a `TODO(claude): what to do or consider doing, and why` comment.
-- Incidental refactoring is acceptable if it's not large-scale. An example would be moving a private constant previously
+- When something is valid but out of scope, add a `TODO(agent-name): what to do or consider doing, and why` comment.
+- Incidental refactoring is preferable if it's not large-scale. An example would be moving a private constant previously
   used by a single file into a shared place if it becomes useful to multiple files.
 - Before implementing a PR, consider which parts of the logic would likely exist elsewhere, then look for those bits,
   then make sure to reuse them rather than re-implementing the same logic. If you find a chunk of logic that would be
   useful in multiple places, consider whether it makes sense to refactor it, or just accept a smidge of duplication.
+- Do not use existing code as an excuse to perpetuate bad patterns. If a bug has been verified in the new code, fix it,
+  even if the same bug exists in old code. Then add a TODO(agent-name) anywhere that the bug appears in the old code but
+  that you deem out of scope for current PR.
 
 ## Attribution
 
